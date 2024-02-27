@@ -14,14 +14,16 @@ app.use((req, res, next) => {
 app.use(cors());
 
 // REQS
-app.get("/api", get);
-app.get("/api/:id", get);
+app.get("/api/tasks", get);
+app.get("/api/tasks/:id", get);
 
-app.post("/api", post);
+app.post("/api/tasks", post);
 
-app.patch("/api/:id", patch);
+app.patch("/api/tasks", patch);
+app.patch("/api/tasks/:id", patch);
 
-app.delete("/api/:id", del);
+app.delete("/api/tasks", del);
+app.delete("/api/tasks/:id", del);
 
 // AFTERWARE
 // Error handler, called from req handlers
@@ -29,6 +31,7 @@ app.use((err, req, res, next) => {
   res
     .status(err.code)
     .json({ code: err.code, message: err.message, error: err.error });
+  return;
 });
 
 app.listen(port, () => {

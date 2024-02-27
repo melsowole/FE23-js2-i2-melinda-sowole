@@ -5,9 +5,9 @@ const DBPath = "./db.json";
 export async function readFromDB() {
   const db = await fs.readFile(DBPath);
 
-  const obj = JSON.parse(db);
+  const dbObj = db == "" ? [] : JSON.parse(db);
 
-  return obj;
+  return dbObj;
 }
 
 export function writeToDB(obj) {

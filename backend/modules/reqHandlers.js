@@ -1,69 +1,109 @@
 import Err from "./Err.js";
 import { readFromDB, writeToDB } from "./dataAccess.js";
+import {
+  postRequestValidation,
+  patchRequestValidation,
+  deleteRequestValidation,
+} from "./reqDataValidationHandler.js";
 
 export function get(req, res, next) {
-  readFromDB().then((r) => {
-    if (req.params.id) {
-      const match = r.find((o) => o.id == req.params.id);
+  readFromDB()
+    .then((tasks) => {
+      if (req.params.id) {
+        // if only one task is requested
+        const match = tasks.find((task) => task.id == req.params.id);
 
-      if (match) {
-        res.json(match);
+        if (match) {
+          res.json(match);
+        } else {
+          throw new Err(404, "User not found");
+        }
       } else {
-        next(new Err(404, "User not found"));
-        return;
+        // all tasks
+        res.json(tasks);
       }
-    } else {
-      res.json(r);
-    }
-  });
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
 
 export function post(req, res, next) {
-  readFromDB().then((r) => {
-    req.body.id = Date.now();
-    r.push(req.body);
+  try {
+    postRequestValidation(req);
 
-    writeToDB(r);
+    readFromDB().then((tasks) => {
+      const newTask = {
+        id: Date.now(),
+        task: req.body.task,
+        category: req.body.category,
+        status: "to do",
+        assigned: false,
+      };
 
-    res.json(req.body);
-  });
+      tasks.push(newTask);
+
+      writeToDB(tasks);
+
+      res.json(newTask);
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
 }
 
 export function patch(req, res, next) {
-  if (!Object.keys(req.body).length) {
-    next(new Err(400, "Request body is missing!"));
+  try {
+    patchRequestValidation(req);
+
+    readFromDB()
+      .then((r) => {
+        const match = r.find((o) => o.id == req.params.id);
+
+        if (match) {
+          for (const key in req.body) {
+            match[key] = req.body[key];
+          }
+
+          writeToDB(r);
+
+          res.json(match);
+        } else {
+          throw new Err(404, "User not Found!");
+        }
+      })
+      .catch((err) => {
+        // HOW REMOVE THIS STEP
+        next(err);
+      });
+  } catch (err) {
+    next(err);
     return;
   }
-
-  readFromDB().then((r) => {
-    const match = r.find((o) => o.id == req.params.id);
-
-    if (match) {
-      for (const key in req.body) {
-        if (key == "id") continue; // send error message?
-        match[key] = req.body[key];
-      }
-
-      writeToDB(r);
-
-      res.json(match);
-    } else {
-      next(new Err(404, "User not Found!"));
-    }
-  });
 }
 
 export function del(req, res, next) {
-  readFromDB().then((r) => {
-    const matchIndex = r.findIndex((o) => o.id == req.params.id);
+  try {
+    deleteRequestValidation(req);
 
-    if (matchIndex >= 0) {
-      r.splice(matchIndex, 1);
+    readFromDB()
+      .then((r) => {
+        const matchIndex = r.findIndex((o) => o.id == req.params.id);
 
-      writeToDB(r);
-      res.json(req.params.id);
-    } else {
-      next(new Err(404, "User not Found!"));
-    }
-  });
+        if (matchIndex >= 0) {
+          r.splice(matchIndex, 1);
+
+          writeToDB(r);
+          res.json({ id: req.params.id });
+        } else {
+          throw new Err(404, "User not Found!");
+        }
+      })
+      .catch((err) => {
+        next(err);
+      });
+  } catch (err) {
+    next(err);
+  }
 }
