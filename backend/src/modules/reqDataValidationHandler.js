@@ -1,41 +1,44 @@
-import Err from "./Err.js";
+import CustomError from "./CustomError.js";
 
 // EXPORTS
 export function postRequestValidation(req) {
   if (reqEmpty(req.body)) {
-    throw new Err(400, "Request body missing!");
+    throw new CustomError(400, "Request body missing!");
   }
 
   if (reqKeyMissing(req.body, ["task", "category"])) {
-    throw new Err(400, "Request must contain keys 'task' and 'category'.");
+    throw new CustomError(
+      400,
+      "Request must contain keys 'task' and 'category'."
+    );
   }
 
   if (reqUnsupportedKeys(req.body, ["task", "category"])) {
-    throw new Err(
+    throw new CustomError(
       400,
       "Request body contains unsupported keys. Post requests only accept 'task' and 'category' in body."
     );
   }
 
   if (reqValNotString(req.body)) {
-    throw new Err(400, "Request values must be of type string.");
+    throw new CustomError(400, "Request values must be of type string.");
   }
 }
 
 export function patchRequestValidation(req) {
   if (reqEmpty(req.params)) {
-    throw new Err(400, "Patch request missing 'id' parameter.");
+    throw new CustomError(400, "Patch request missing 'id' parameter.");
   }
 
   if (reqEmpty(req.body)) {
-    throw new Err(
+    throw new CustomError(
       400,
       "Missing request body with keys 'status' and/or 'assigned'."
     );
   }
 
   if (reqUnsupportedKeys(req.body, ["status", "assigned"])) {
-    throw new Err(
+    throw new CustomError(
       400,
       "Request body contains unsupported keys. Patch requests may only contain keys 'status' and/or 'assigned."
     );
@@ -48,27 +51,28 @@ export function patchRequestValidation(req) {
       "done",
     ])
   ) {
-    throw new Err(
+    throw new CustomError(
       400,
       "Value of status must be 'to do', 'in progress', or 'done'."
     );
   }
 
   if (reqValNotString(req.body)) {
-    throw new Err(400, "Values of 'status' and/or 'assigned' must be a string");
+    throw new CustomError(
+      400,
+      "Values of 'status' and/or 'assigned' must be a string"
+    );
   }
 }
 
 export function deleteRequestValidation(req) {
   if (reqEmpty(req.params)) {
-    throw new Err(400, "Delete request missing 'id' parameter.");
+    throw new CustomError(400, "Delete request missing 'id' parameter.");
   }
 }
 
 // VALIDATOR FUNCTIONS
 function reqEmpty(req) {
-  console.log(req);
-
   return !Object.keys(req).length;
 }
 

@@ -1,5 +1,5 @@
 // Used to throw errors in the afterware
-export default class Err extends Error {
+export default class CustomError extends Error {
   constructor(code, error) {
     super();
     this.code = code;

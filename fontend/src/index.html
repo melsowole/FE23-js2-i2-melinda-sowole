@@ -4,8 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style/style.css" />
-    <script type="module" src="index.js"></script>
+    <script type="module" src="./index.js"></script>
     <title>Inlämning</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <div class="margin">
+        <h1>Scrum board</h1>
+      </div>
+    </header>
+    <div class="form-wrapper">
+      <form class="task-form margin">
+        <h2>Add Task</h2>
+        <label class="task-input-wrapper">
+          Task Description
+          <input type="text" name="task" required />
+        </label>
+        <select name="category">
+          <option value="ux">ux</option>
+          <option value="dev frontend">dev frontend</option>
+          <option value="dev backend">dev backend</option>
+        </select>
+        <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <main class="margin">
+      <div class="legend">
+        <div><span class="dot ux"></span>ux</div>
+        <div><span class="dot dev-frontend"></span>dev frontend</div>
+        <div><span class="dot dev-backend"></span>dev backend</div>
+      </div>
+
+      <section class="boards">
+        <section class="board">
+          <h2>To Do</h2>
+          <ul class="to-do"></ul>
+        </section>
+
+        <section class="board">
+          <h2>In Progress</h2>
+          <ul class="in-progress"></ul>
+        </section>
+
+        <section class="board">
+          <h2>Done</h2>
+          <ul class="done"></ul>
+        </section>
+      </section>
+    </main>
+  </body>
 </html>

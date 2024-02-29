@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-const DBPath = "./db.json";
+const DBPath = "./src/db.json";
 
 export async function readFromDB() {
   const db = await fs.readFile(DBPath);

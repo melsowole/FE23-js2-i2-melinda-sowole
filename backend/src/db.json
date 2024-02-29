@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1709212110866,
+    "task": "Design homepage layout",
+    "category": "ux",
+    "status": "in progress",
+    "assigned": "Alice"
+  },
+  {
+    "id": 1709212126179,
+    "task": "Implement login  form UI",
+    "category": "dev frontend",
+    "status": "in progress",
+    "assigned": "Becky"
+  },
+  {
+    "id": 1709212139748,
+    "task": "Setup user authentication",
+    "category": "dev backend",
+    "status": "in progress",
+    "assigned": "Charlie"
+  },
+  {
+    "id": 1709212155914,
+    "task": "Refactor CSS for better code organization",
+    "category": "dev frontend",
+    "status": "done",
+    "assigned": "Becky"
+  },
+  {
+    "id": 1709212170907,
+    "task": "Conduct user testing for navigation menu",
+    "category": "ux",
+    "status": "done",
+    "assigned": "Alice"
+  },
+  {
+    "id": 1709212189420,
+    "task": "Optimize images for better website performance",
+    "category": "dev frontend",
+    "status": "to do",
+    "assigned": false
+  },
+  {
+    "id": 1709212200473,
+    "task": "Implement error handling for login form",
+    "category": "dev backend",
+    "status": "to do",
+    "assigned": false
+  },
+  {
+    "id": 1709212212750,
+    "task": "Create responsie design for mobile devices",
+    "category": "ux",
+    "status": "to do",
+    "assigned": false
+  }
+]
