@@ -40,6 +40,7 @@ export async function addTask(req, res, next) {
       category: req.body.category,
       status: "to do",
       assigned: false,
+      lastModified: Date.now(),
     };
 
     tasks.push(newTask);
@@ -66,6 +67,8 @@ export async function updateTask(req, res, next) {
       for (const key in req.body) {
         match[key] = req.body[key];
       }
+
+      match.lastModified = Date.now();
 
       writeToDB(tasks);
 

@@ -10,6 +10,9 @@ export async function readFromDB() {
   return dbObj;
 }
 
-export function writeToDB(obj) {
-  fs.writeFile(DBPath, JSON.stringify(obj, null, 2));
+export function writeToDB(arr) {
+  // latest modified always displays first
+  const sortedData = arr.sort((a, b) => b.lastModified - a.lastModified);
+
+  fs.writeFile(DBPath, JSON.stringify(sortedData, null, 2));
 }

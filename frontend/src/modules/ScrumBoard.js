@@ -3,9 +3,7 @@ import Task from "./Task.js";
 
 export default class ScrumBoard {
   constructor() {
-    this.toDoCont = document.querySelector(".boards to-do");
-    this.inProgressCont = document.querySelector(".boards in-progress");
-    this.doneCont = document.querySelector(".boards done");
+    this.displayTasks();
   }
 
   async addTask(newTask) {

@@ -185,10 +185,16 @@ select {
   gap: 1rem;
 }
 
+.task form[name="assign"] {
+  flex-direction: row;
+  align-items: end;
+}
+
 .task form label {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  flex-grow: 1;
 }
 
 .task input[type="text"] {

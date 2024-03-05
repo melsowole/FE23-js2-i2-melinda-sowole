@@ -9,5 +9,3 @@ addTaskForm.addEventListener("submit", (e) => {
 
   scrum.addTask(Object.fromEntries(new FormData(addTaskForm)));
 });
-
-scrum.displayTasks();
